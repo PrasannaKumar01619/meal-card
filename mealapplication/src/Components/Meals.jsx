@@ -4,7 +4,7 @@ import { useContext } from "react";
 import {CustomContext} from "../Context"
 function Meals(){
     const meals = CustomContext()
-    console.log(meals)
+    // console.log(meals)
     
     
     return(
