@@ -11,40 +11,40 @@ function Meals(){
         <div>
             {meals.map((meal) => {
                 const mealArray = Object.entries(meal)
-                const filteredIngredient = mealArray.filter(([k,v]) => {
-                    return(v !== "")
-                }).filter(([k,v]) => {
+                const filteredIngredient = mealArray.filter(([k,v]) => {return(v && v.trim() !== "")})
+                .filter(([k,v]) => {
                     return (k.includes("strIngredient"))
                 }) 
                 
                 const filteredMeasures = mealArray.filter(([k,v]) => {return(k.includes("strMeasure"))})
                 .filter(([k,v]) => {
-                    return (v && v.trim() != '')
+                    return (v && v.trim() !== '')
                 })
                 
-                
-                {/* .map(([k,v]) => {
-                    return(v)
-                }) */}
-                console.log("one",filteredIngredient)
-                console.log("two",filteredMeasures)
+                const ingredient  = filteredIngredient.map(([k,v]) => {
+                    return (v)
+                })
+               
+                const measure  = filteredMeasures.map(([k,v]) => {
+                    return (v)
+                })
+
+               
+                console.log("one",ingredient)
+                console.log("two",measure)
                 return(
                     <div key={meal.idMeal}>
                      <h2 >{meal.strMeal}</h2>
-                     {filteredIngredient.map(([k,v]) => {
-                        filteredMeasures.forEach(([k1,v1]) => {
+                    <ul>
+                        {ingredient.map((item,index) => {
                             return (
-                            <ul key={k}>
-                                <li>{v}</li>
-                            </ul>
-                        )
-                        })
-                        
-                     })} 
-                    
+                                <li key={index}>{item} : {measure[index]}</li>
+                            )
+                        })}
+                    </ul>
                     </div>
                     )
-                {/* return(filteredIngredient) */}
+               
             })}
         </div>
      
