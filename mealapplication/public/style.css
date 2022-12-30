@@ -109,15 +109,22 @@ body{
     font-family: 'Times New Roman', Times, serif;
 }
     
-.highlightClass{
+/* .highlightClass{
     color: blueviolet;
-}
+} */
 
 .navBar{
 
     margin-bottom: 100px;
-    /* display: flex !important;
-    flex-wrap: wrap !important; */
+    
+    /* flex-wrap: wrap !important;  */
+ 
+}
+
+.navBar1{
+    display: flex !important;
+    justify-content:space-evenly !important;
+    
 }
 
 

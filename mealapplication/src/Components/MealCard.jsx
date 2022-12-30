@@ -30,7 +30,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard() {
-    const {meals,loading,handleOpen,text} = CustomContext()
+    const {meals,loading,handleOpen,text,filteredMeals,searchClicked} = CustomContext()
     const [expanded, setExpanded] = React.useState(false);
     if (loading){
         return(
@@ -50,16 +50,14 @@ export default function RecipeReviewCard() {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-    console.log(meals)
+    // console.log(meals)
     return (
         <div className='align'>
 
-            {meals.filter((m) => {
-                return(m.strMeal.toLowerCase().includes(text))
-            }).map((meal) => {
+            {( text.length > 0 ? filteredMeals : meals ).map((meal) => {
                 const { idMeal, strMeal: title, strMealThumb: image, strArea: cusine, strCategory: category } = meal
                 return (
-                    <Card sx={{ maxWidth: 345 }} key={idMeal} className='card ' onClick={() => handleOpen(idMeal)}>
+                    <Card sx={{ width: 335 }} key={idMeal} className='card ' onClick={() => handleOpen(idMeal)}>
                         <CardHeader className='header'
                             avatar={
                                 <Avatar className='avatar' sx={{ bgcolor: category[0] === "V" ? green[500] : red[500] }} style={{ fontSize: "0.8rem", textAlign: "center", color: 'black',borderRadius:'50px' }} aria-label="recipe">
