@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React from 'react';
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -30,7 +30,7 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function RecipeReviewCard() {
-    const {meals,loading,handleOpen,text,filteredMeals,searchClicked} = CustomContext()
+    const {meals,loading,handleOpen,text,filteredMeals,searchClicked,addToFavorites} = CustomContext()
     const [expanded, setExpanded] = React.useState(false);
     if (loading){
         return(
@@ -54,13 +54,13 @@ export default function RecipeReviewCard() {
     return (
         <div className='align'>
 
-            {( text.length > 0 ? filteredMeals : meals ).map((meal) => {
+            {(searchClicked && text.length>0 ? filteredMeals : meals ).map((meal) => {
                 const { idMeal, strMeal: title, strMealThumb: image, strArea: cusine, strCategory: category } = meal
                 return (
-                    <Card sx={{ width: 335 }} key={idMeal} className='card ' onClick={() => handleOpen(idMeal)}>
+                    <Card sx={{ maxWidth: 345 }} key={idMeal} className='card ' >
                         <CardHeader className='header'
                             avatar={
-                                <Avatar className='avatar' sx={{ bgcolor: category[0] === "V" ? green[500] : red[500] }} style={{ fontSize: "0.8rem", textAlign: "center", color: 'black',borderRadius:'50px' }} aria-label="recipe">
+                                <Avatar className='avatar1' sx={{ bgcolor: category[0] === "V" ? green[500] : red[500] }} style={{ fontSize: "0.8rem", textAlign: "center", color: 'black',borderRadius:'50px' }} aria-label="recipe">
                                     {category[0] === "V" ? "V" : "NV"}
 
                                 </Avatar>
@@ -69,7 +69,7 @@ export default function RecipeReviewCard() {
                             title=<h2 className='title'>{title}</h2>
 
                         />
-                        <CardMedia
+                        <CardMedia onClick={() => handleOpen(idMeal)}
                             component="img"
                             height="194"
                             image={image}
@@ -83,7 +83,7 @@ export default function RecipeReviewCard() {
                                 </Typography>
                             </CardContent>
                             <CardActions disableSpacing className='content1'>
-                                <IconButton aria-label="add to favorites" >
+                                <IconButton onClick={() => addToFavorites(idMeal)} aria-label="add to favorites" >
                                     <FavoriteIcon className='btn' />
                                 </IconButton>
                                 <IconButton aria-label="share" >

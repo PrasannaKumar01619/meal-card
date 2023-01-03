@@ -9,6 +9,8 @@
    justify-content: center;
    column-gap: 30px;
    row-gap: 30px;
+   margin-top: 100px;
+   position: relative;
  
 }
 .header{
@@ -68,7 +70,7 @@
     left: 220px;
 } */
 
-.avatar{
+.avatar1{
     display: flex;
 }
 
@@ -115,19 +117,73 @@ body{
 
 .navBar{
 
-    margin-bottom: 100px;
+    margin-bottom: 200px;
     
-    /* flex-wrap: wrap !important;  */
+    
+   
  
 }
 
 .navBar1{
     display: flex !important;
-    justify-content:space-evenly !important;
+    justify-content:flex-start !important;
+    flex-wrap: wrap !important; 
+    /* padding: 10px !important;  */
+
+}
+
+.favourites-img{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: black;
+    flex-direction: row;
+    /* margin-top: 77px; */
+    justify-content: flex-start;
+    column-gap: 10px;
+    row-gap: 10px;
+    align-items: center;
+    cursor: pointer;
+    
+}
+.avat{
+    float: right;
+
+}
+
+.favorite-container{
+    display: flex;
+    justify-content: space-between;
+    background-color: black;
+    align-items: center;
+    padding: 10px;
+}
+
+.fav-title{
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.favClose{
+
+    font-size: 20px;
+    margin-right: 10px;
+    cursor: pointer;
     
 }
 
+.favimgClose{
 
+    font-size: 10px;
+    display: none;
+    color: red;
+    transition: 2s ;
+    
+}
+
+.avatDiv:hover .favimgClose{
+
+    display: block;
+}
 
 @media(max-width:998px){
     html {
@@ -145,6 +201,7 @@ body{
      
 
 }
+
 
 @media(max-width:768px){
     html {
@@ -164,7 +221,7 @@ body{
 
 @media(max-width:600px){
     html {
-        font-size: 100%;
+        font-size: 80%;
     }
     .align{
 
@@ -188,7 +245,7 @@ body{
 }
 @media(max-width:400px){
     html {
-        font-size: 100%;
+        font-size: 60%;
     }
     .align{
 

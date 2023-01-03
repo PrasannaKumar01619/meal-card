@@ -3,6 +3,7 @@ import Meals from "./Components/Meals";
 import RecipeReviewCard from "./Components/MealCard"
 import BasicModal from "../src/Components/Modal"
 import ButtonAppBar from "../src/Components/Search"
+import Favorites from "./Components/Favorites";
 function App() {
 
   return (
@@ -10,6 +11,7 @@ function App() {
       
         {/* <Meals /> */}
         <ButtonAppBar></ButtonAppBar>
+        {/* <Favorites></Favorites> */}
         <RecipeReviewCard />
         <BasicModal></BasicModal>
     </>

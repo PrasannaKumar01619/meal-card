@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios'
 import { useContext } from "react";
+import { json } from "body-parser";
 
 const allMealUrl = 'https://www.themealdb.com/api/json/v1/1/search.php?s='
 const randomMealUrl = 'https://www.themealdb.com/api/json/v1/1/random.php'
@@ -27,16 +28,52 @@ function AppProvider({ childern }) {
     const [open, setOpen] = React.useState(false);
     const [selectedMeal, setSelectedMeal] = useState({});
     const [text, setText] = useState([]);
+    const [autoText,setAutotext] = useState("");
+    const [x,setX] = useState("");
+    const [textSelected,setTextSelected] = useState(false);
     const [searchClicked, setSearchClicked] = useState(false);
-    const [suggestions, setSuggestions] = useState([]);
+    const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem("favorites")) || []);
+    const [showFavorites,setShowFavorites] = useState(false);
 
-    // var filteredMeals = meals.filter((m) => {
-    //     return (m.strMeal.toLowerCase().trim().includes(text))
+    // var filteredMeals1 = meals.filter((m) => {
+    //     return (m.strMeal.toLowerCase().trim().startsWith(text))
     // })
+    var filteredMeals1 = meals.filter((m) => {
+        return (m.strMeal)
+    })
     const filteredMeals = meals.filter((m) => {
         return ( (text.includes(m.strMeal)))
     })
 
+    
+    // var filteredMeals = meals.filter((m) => {
+    //     if(text.length > 1){
+    //         return ( (text.includes(m.strMeal)))
+    //     }else{
+    //         return (m.strMeal.toLowerCase().trim().includes(text))
+    //     }
+        
+    // })
+    const favoritesClicked = () => {
+        setShowFavorites(true)
+    }
+    const favoritesCloseClicked = () => {
+        setShowFavorites(false)
+    }
+    const addToFavorites = (idMeal) => {
+        const alreadyFavorite = favorites.find((meal) => meal.idMeal === idMeal)
+        if (alreadyFavorite) return
+        const meal = meals.find((meal) => meal.idMeal === idMeal)
+        const updatedFavorites = [...favorites,meal]
+        setFavorites(updatedFavorites)
+        localStorage.setItem("favorites",JSON.stringify(updatedFavorites))
+    }
+
+    const removeFromFavorites = (idMeal) => {
+        const updatedFavorites = favorites.filter((favorite) => favorite.idMeal !== idMeal)
+        setFavorites(updatedFavorites)
+        localStorage.setItem("favorites",JSON.stringify(updatedFavorites))
+    }
     const handleOpen = (idMeal) => {
         let meal = meals.find((meal) => meal.idMeal === idMeal);
         setSelectedMeal(meal);
@@ -46,35 +83,44 @@ function AppProvider({ childern }) {
     }
     const handleClose = () => setOpen(false);
 
-    const handleChange = (e,value) => {
-        // setText(e.target.value)
+    const handleChange = (event,value) => {
+        // setText((e.target.value).split(/[,-:]+/))
+        // setAutotext(e.target.value)
+        // if(e.target.value){
+        // setTextSelected(true)
+        // }else{
+        //     setTextSelected(false)
+        // }
         // console.log(value)
         const textInput = value.map((v) => v.strMeal)
         setText(textInput)
-        // console.log(textInput)
-        // setSuggestions(filteredMeals)
+        
+        console.log(textInput)
+        
         
     }
 
+    
+    const handleSubmit = (event) => {
+        event.preventDefault()
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault()
+        setSearchClicked(true)
+        // console.log('clicked')
+        // if (searchClicked === true){
+        //     setInput(filteredMeals)
+        // }
 
-    //     setSearchClicked(true)
-
-    //     // if (searchClicked === true){
-    //     //     setInput(filteredMeals)
-    //     // }
-
-    // }
+    }
 
     useEffect(() => {
-        // if(text === ""){
+        // if(text.map((x) => x="")){
+        // setTextSelected(false)
+        // }
+      
+        setSearchClicked(false)
+        // if (text.length === 0){
         //     setSearchClicked(false)
         // }
-        if (text.length === 0){
-            setSearchClicked(false)
-        }
         
         // if(text.length>0){
         //     setSuggestions(filteredMeals)
@@ -83,10 +129,15 @@ function AppProvider({ childern }) {
         // }
         
     }, [text])
-    // console.log(searchClicked)
-    // console.log(filteredMeals)
+    console.log(searchClicked)
+    console.log(filteredMeals1,'fm')
+    // console.log(textSelected)
+    console.log(text,"text")
+    // console.log(filteredMeals1)
+    // console.log(textSelected)
+    // console.log(text.toLowerCase())
     // console.log(suggestions, 'sugg')
-    console.log(text)
+    
     const fetchMeals = async (url) => {
         setLoading(true)
         try {
@@ -111,7 +162,7 @@ function AppProvider({ childern }) {
 
     
     return (
-        <AppContext.Provider value={{ meals, loading, open, handleOpen, handleClose, selectedMeal, text, handleChange, filteredMeals, searchClicked,suggestions }}>
+        <AppContext.Provider value={{favoritesCloseClicked,showFavorites,favoritesClicked,favorites,removeFromFavorites,addToFavorites,autoText,textSelected,filteredMeals1, meals, loading, open, handleOpen, handleClose, selectedMeal, text, handleChange, filteredMeals, searchClicked,handleSubmit }}>
             {childern}
         </AppContext.Provider>
     )
